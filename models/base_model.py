@@ -12,17 +12,28 @@ class BaseModel():
         - sets randomly generated id for instances
         - saved creation and update datetime.
     """
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """instantiation method for the BaseModel class
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = self.created_at
+        datetime_str = "%Y-%m-%dT%H:%M:%S.%f"
+        if len(kwargs) != 0:
+            for key, value in kwargs.items():
+                if key == '__class__':
+                    continue
+                if key in ['created_at', 'updated_at']:
+                    self.__dict__[key] = datetime.datetime.\
+                                         strptime(value, datetime_str)
+                    continue
+                self.__dict__[key] = value
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
+            self.updated_at = self.created_at
 
     def __str__(self):
         """string representation for the BaseModel instances.
         """
-        return "[" + self.__class__.__name__ + "] " + (self.id) + " " +\
+        return "[" + self.__class__.__name__ + "] (" + self.id + ") " +\
             str(self.__dict__)
 
     def save(self):

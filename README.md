@@ -12,7 +12,7 @@ commands.
 
 #### How it works (in progress)
 | command | usage | function |
-| :====== | :==== | :======= |
+| :------ | :---- | :------- |
 | help | help \<command\> | list commands, or description of command if given |
 | quit/Ctrl+D | quit/Ctrl+D | exits the program |
 | create | create \<class\_name\> | create an instance of the class |

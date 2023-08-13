@@ -57,11 +57,11 @@ class TestBaseModel(TestCase):
         with mock.patch('datetime.datetime') as mock_time:
             mock_time.now.return_value = test_date
             base_obj = BaseModel()
+            base_obj.str_attr = "some string"
+            base_obj.int_attr = 1234
             obj_dict = base_obj.to_dict()
             self.assertEqual(obj_dict['created_at'], test_date_iso)
             self.assertEqual(obj_dict['updated_at'], test_date_iso)
-        base_obj.str_attr = "some string"
-        base_obj.int_attr = 1234
         self.assertIn('str_attr', obj_dict)
         self.assertIn('int_attr', obj_dict)
 

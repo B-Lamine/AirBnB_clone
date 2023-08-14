@@ -5,6 +5,7 @@
 
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 import cmd
 
 
@@ -70,9 +71,10 @@ class HBNBCommand(cmd.Cmd):
             tmp_list = []
             objs_dict = storage.all().copy()
             if class_name:
-                my_class = eval(class_name)
-                for obj in objs_dict.values():
-                    tmp_list.append(str(my_class(**obj)))
+                for key, value in objs_dict.items():
+                    if key.startswith(class_name):
+                        my_class = eval(class_name)
+                        tmp_list.append(str(my_class(**value)))
                 print(tmp_list)
             else:
                 classes = []
@@ -80,11 +82,11 @@ class HBNBCommand(cmd.Cmd):
                     class_name = key.split('.')[0]
                     if class_name not in classes:
                         classes.append(class_name)
-                for class_name in classes:
-                    my_class = eval(class_name)
-                    for obj in objs_dict.values():
-                        tmp_list.append(str(my_class(**obj)))
+                for key, value in objs_dict.items():
+                    my_class = eval(key.split('.')[0])
+                    tmp_list.append(str(my_class(**value)))
                 print(tmp_list)
+                return
 
     def do_show(self, line):
         """given class and id, print dictionary representation of

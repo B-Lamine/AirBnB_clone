@@ -30,7 +30,7 @@ class BaseModel():
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = self.created_at
-            storage.new(self)
+        storage.new(self)
 
     def __str__(self):
         """string representation for the BaseModel instances.
@@ -41,8 +41,8 @@ class BaseModel():
     def save(self):
         """record update datetime.
         """
-        storage.save()
         self.updated_at = datetime.datetime.now()
+        storage.save()
 
     def to_dict(self):
         """get dictionary representation of an instance.
